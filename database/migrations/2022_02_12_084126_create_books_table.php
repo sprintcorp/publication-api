@@ -17,8 +17,6 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('file');
-            $table->string('file_id');
-            $table->string('thumbnail');
             $table->timestamps();
         });
     }
