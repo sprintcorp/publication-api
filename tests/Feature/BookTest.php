@@ -87,20 +87,4 @@ class BookTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-     * Delete book
-     *
-     * @test
-     * @return void
-     */
-    public function delete_book()
-    {
-        $book = $this->create_book();
-        $response = $this->delete("/api/public/book/{$book->id}",[
-            'authorization' => env('API_KEY')
-        ]);
-        $response->assertStatus(200);
-    }
-
-
 }
