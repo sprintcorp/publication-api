@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthorResources extends JsonResource
+class BookResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,10 @@ class AuthorResources extends JsonResource
     public function toArray($request)
     {
         return [
-            'author_id'=> $this->id,
-            'author_name' => $this->name,
+            'book_id'=> $this->id,
+            'book_title' => $this->title,
+            'book_authors' => AuthorResources::collection($this->authors),
+            'book_publishers' => PublisherResources::collection($this->publishers),
         ];
     }
 }

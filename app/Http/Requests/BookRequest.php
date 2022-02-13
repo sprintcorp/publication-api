@@ -23,6 +23,13 @@ class BookRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->isMethod('PUT')) {
+            return [
+                'title' => 'required|string',
+                'publisher_id' => 'nullable|exists:publishers,id',
+                'author_id' => 'nullable|exists:authors,id',
+            ];
+        }
         return [
             'title' => 'required|string',
             'publisher_id' => 'required|exists:publishers,id',

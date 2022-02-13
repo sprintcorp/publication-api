@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
+use App\Http\Resources\BookResource;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -18,7 +19,7 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::with(['authors','publishers'])->get();
-        return $this->showAll($books,200);
+        return $this->showAll(BookResource::collection($books),200);
     }
 
     /**
