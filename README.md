@@ -1,78 +1,172 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+## Project Overview
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This solution is build using laravel 7. The application allows user's with app key create books, author and publishers. .
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+- Clone the project from repository using the `https://github.com/sprintcorp/publication-api.git` into a directory on your pc
+- Move to project directory `cd publication-api` 
+- Run `composer install` to install all packages.
+- When the above step has been done you the proceed to create database, the database use during development is mysql database and Eloquent ORM is used to interact with the database,
+- Create a .env file the copy .env.example to create enviroment variable for this application which houses simple configuration text file that is used to define some variables passed into the application's environment,
+- Generate app key which is needed for the application to function properly used for all encrypted data, like sessions,Password, remember token using `php artisan key:generate`.
+- Run `php artisan migrate` which creates table in the database specified application .env file.
+- Run `php artisan db:seed` to seed data into the database
+- Run using `php artisan serve` which starts the application using laravel default port 8000 to run it on the system locally.
+- Add `authorization` as header key and `my_app_test` as value ` 'authorization' => env('API_KEY')` or replace the value of `API_KEY` in .env file then use it as authorize the api
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Usage
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Get all books `localhost:8000/api/public/book` method `GET` 
+#### Response
 
-## Laravel Sponsors
+    {
+        "current_page": 1,
+        "data": [
+            {
+                "book_id": 2,
+                "book_title": "Book one",
+                "book_authors": [
+                    {
+                        "author_id": 3,
+                        "author_name": "Djed spence"
+                    }
+                ],
+                "book_publishers": [
+                    {
+                        "publisher_id": 1,
+                        "publisher_name": "A.J Wilson"
+                    },
+                    {
+                        "publisher_id": 2,
+                        "publisher_name": "Peak Ville"
+                    }
+                ]
+            },
+            {
+                "book_id": 3,
+                "book_title": "Book four",
+                "book_authors": [
+                    {
+                        "author_id": 1,
+                        "author_name": "Billy jean"
+                    },
+                    {
+                        "author_id": 2,
+                        "author_name": "John doe"
+                    }
+                ],
+                "book_publishers": [
+                    {
+                        "publisher_id": 1,
+                        "publisher_name": "A.J Wilson"
+                    },
+                    {
+                        "publisher_id": 2,
+                        "publisher_name": "Peak Ville"
+                    }
+                ]
+            }
+        ],
+        "first_page_url": "http://127.0.0.1:8000/api/public/book?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://127.0.0.1:8000/api/public/book?page=1",
+        "next_page_url": null,
+        "path": "http://127.0.0.1:8000/api/public/book",
+        "per_page": 10,
+        "prev_page_url": null,
+        "to": 2,
+        "total": 2
+    }
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+- Get book `localhost:8000/api/public/book/{id}` method `GET` where `id` is book id 
+#### Response
 
-## Contributing
+    {
+        "book_id": 2,
+        "book_title": "Book one",
+        "book_authors": [
+            {
+                "author_id": 3,
+                "author_name": "Djed spence"
+            }
+        ],
+        "book_publishers": [
+            {
+                "publisher_id": 1,
+                "publisher_name": "A.J Wilson"
+            },
+            {
+                "publisher_id": 2,
+                "publisher_name": "Peak Ville"
+            }
+        ]
+    }
+    
+    
+- Create book `localhost:8000/api/public/book` method `POST`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Data
+    {
+        "title":"book three",
+        "author_id":[2,3],
+        "publisher_id":[2,3]
+    }
 
-## Code of Conduct
+- Where `autho_id` takes array of author id and `publisher_id` takes array of publisher id
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Response
 
-## Security Vulnerabilities
+    {
+        "title": "book three",
+        "updated_at": "2022-02-13T22:13:34.000000Z",
+        "created_at": "2022-02-13T22:13:34.000000Z",
+        "id": 4
+    }
+    
+    
+ - Update book `localhost:8000/api/public/book/{id}` method `PUT` where `id` is book id 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Data
+    {
+        "title":"book three",
+        "author_id":[2,3],
+        "publisher_id":[2,3]
+    }
 
-## License
+- Where `autho_id` takes array of author id and `publisher_id` takes array of publisher id
+#### Response
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    {
+        "book_id": 2,
+        "book_title": "Book one",
+        "book_authors": [
+            {
+                "author_id": 3,
+                "author_name": "Djed spence"
+            }
+        ],
+        "book_publishers": [
+            {
+                "publisher_id": 1,
+                "publisher_name": "A.J Wilson"
+            },
+            {
+                "publisher_id": 2,
+                "publisher_name": "Peak Ville"
+            }
+        ]
+    }
+    
+   - Delete book `localhost:8000/api/public/book/{id}` method `DELETE` where `id` is book id
+        
+   #### Response
+
+    {
+        "data": "book deleted successfully"
+    }
