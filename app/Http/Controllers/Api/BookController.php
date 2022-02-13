@@ -43,7 +43,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = Book::with(['authors','publishers'])->findorFind($id);
+        $book = Book::with(['authors','publishers'])->findorFail($id);
         return $this->showOne($book,200);
     }
 
@@ -56,7 +56,13 @@ class BookController extends Controller
      */
     public function update(BookRequest $request, $id)
     {
-        $book = Book::findorFind($id);
+        $book = Book::findorFail($id);
+        if($request->has('author_id')){
+            $book->authors()->sync($request->author_id);
+        }
+        if($request->has('publisher_id')){
+            $book->publishers()->sync($request->publisher_id);
+        }
         return $this->showOne($book,200);
     }
 
@@ -68,7 +74,7 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        Book::findorFind($id)->delete();
+        Book::findorFail($id)->delete();
         return $this->showMessage('book deleted successfully',200);
     }
 }

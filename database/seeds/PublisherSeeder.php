@@ -11,6 +11,21 @@ class PublisherSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $publishers =  [
+            [
+                'name' => 'A.J Wilson',
+            ],
+            [
+                'name' => 'Peak Ville',
+            ],
+            [
+                'name' => 'Jeff Bill',
+            ],
+            [
+                'name' => 'Mark Hurt',
+            ]
+        ];
+
+        \App\Publisher::insert($publishers);
     }
 }

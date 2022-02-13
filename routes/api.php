@@ -20,6 +20,3 @@ Route::group(['namespace' => 'Api'], function(){
         Route::resource('book','BookController');
     });
 });
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
