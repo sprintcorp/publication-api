@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'auth',
 ], function () {
-    Route::post('/login', 'Api\AuthController@login');
-    Route::post('/register', 'Api\AuthController@register');
+    Route::post('/login', 'Api\Auth\AuthController@login');
+    Route::post('/register', 'Api\Auth\AuthController@register');
 
     Route::group(['middleware' => 'auth:api'], function(){
-        Route::post('/logout', 'AuthController@logout');
-        Route::post('/refresh', 'AuthController@refresh');
-        Route::get('/user-profile', 'AuthController@userProfile');
+        Route::post('/logout', 'Api\Auth\AuthController@logout');
+        Route::post('/refresh', 'Api\Auth\AuthController@refresh');
+        Route::get('/user-profile', 'Api\Auth\AuthController@userProfile');
     });
 });
 

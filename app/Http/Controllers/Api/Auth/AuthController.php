@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegistrationRequest;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -10,21 +13,15 @@ use Illuminate\Validation\Validator;
 
 class AuthController extends Controller
 {
+    use ApiResponser;
     /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request){
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-        if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+    public function login(LoginRequest $request){
+        if (! $token = auth()->attempt($request->all())) {
+            return $this->errorResponse('invalid login credentials',401);
         }
         return $this->createNewToken($token);
     }
@@ -33,23 +30,14 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
+    public function register(RegistrationRequest $request) {
+        $user = User::create([
+            'email'=>$request->email,
+            'name'=>$request->name,
+            'role'=>$request->role,
+            'password' => bcrypt($request->password)
         ]);
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        $user = User::create(array_merge(
-            $validator->validated(),
-            ['password' => bcrypt($request->password)]
-        ));
-        return response()->json([
-            'message' => 'User successfully registered',
-            'user' => $user
-        ], 201);
+        return $this->showOne($user,201);
     }
 
     /**
