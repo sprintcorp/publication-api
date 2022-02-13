@@ -1,8 +1,10 @@
 ## Project Overview
 
-This solution is build using laravel 7. The application allows user's with app key create books, author and publishers. .
+This solution is build using laravel 7. The application allows user's with app key create books, author and publishers.
 
+## Implementation
 
+A model for Author, Publisher and Books was created to help establish relationship amount this entities. The Author and Publisher has a `Many-To-Many` relationship with the book because books can have many authors and many publishers. The app is guarded by an `API_KEY` which authorize action on every endpoint within the application. The API KEY value is supplied to the `.env` file which the application looks up to see if incoming request header `authorization` within it's request before granting user permission to proceed with the request else unathorization warning is fired back at user. The header takes `authorization` as key and value provided in the `.env API_KEY` as value to grant access to the application.
 
 ## Project setup
 
