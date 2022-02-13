@@ -14,24 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['namespace' => 'Api'], function(){
-Route::group([
-    'prefix' => 'auth',
-], function () {
-    Route::post('/login', 'Auth\AuthController@login');
-    Route::post('/register', 'Auth\AuthController@register');
-
-    Route::group(['middleware' => 'auth:api'], function(){
-        Route::post('/logout', 'Auth\AuthController@logout');
-        Route::post('/refresh', 'Auth\AuthController@refresh');
-        Route::get('/user-profile', 'Auth\AuthController@userProfile');
+    Route::group(['prefix' => 'public','middleware'=>'authorization'], function(){
+        Route::resource('publisher','PublisherController');
+        Route::resource('author','AuthorController');
+        Route::resource('book','BookController');
     });
-});
-
-Route::group(['prefix' => 'admin'], function(){
-    Route::resource('publisher','Admin\PublisherController');
-    Route::resource('author','Admin\AuthorController');
-
-});
 });
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();

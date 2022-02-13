@@ -17,4 +17,14 @@ class Book extends Model
     {
         return $this->belongsToMany(Publisher::class);
     }
+
+
+
+//    public function attach_book_to_author_and_publisher($author){
+//        $this->authors()->attach($author->author_id);
+//    }
+//
+//    public function attach_book_to_publisher($publisher){
+//        return $this->authors()->attach($publisher);
+//    }
 }
