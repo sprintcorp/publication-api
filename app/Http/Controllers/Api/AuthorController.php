@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Author;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthorRequest;
+use App\Http\Resources\AuthorResources;
 
 class AuthorController extends Controller
 {
@@ -15,7 +16,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        return $this->showAll(Author::all(),200);
+        return $this->showAll(AuthorResources::collection(Author::all()),200);
     }
 
     /**
@@ -50,7 +51,7 @@ class AuthorController extends Controller
     public function update(AuthorRequest $request, $id)
     {
         $author = Author::findorFail($id)->update($request->all());
-        return $this->showOne($author,200);
+        return $this->showOne(new AuthorResources($author),200);
     }
 
     /**

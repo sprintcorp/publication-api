@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PubliserRequest;
+use App\Http\Resources\PublisherResources;
 use App\Publisher;
 
 class PublisherController extends Controller
@@ -15,7 +16,7 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        return $this->showAll(Publisher::all(),200);
+        return $this->showAll(PublisherResources::collection(Publisher)::all(),200);
     }
 
     /**
@@ -50,7 +51,7 @@ class PublisherController extends Controller
     public function update(PubliserRequest $request, $id)
     {
         $author = Publisher::findorFail($id)->update($request->all());
-        return $this->showOne($author,200);
+        return $this->showOne(new PublisherResources($author),200);
     }
 
     /**

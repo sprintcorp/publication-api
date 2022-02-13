@@ -45,7 +45,7 @@ class BookController extends Controller
     public function show($id)
     {
         $book = Book::with(['authors','publishers'])->findorFail($id);
-        return $this->showOne($book,200);
+        return $this->showOne(new BookResource($book),200);
     }
 
     /**
@@ -64,7 +64,7 @@ class BookController extends Controller
         if($request->has('publisher_id')){
             $book->publishers()->sync($request->publisher_id);
         }
-        return $this->showOne($book,200);
+        return $this->showOne(new BookResource($book),200);
     }
 
     /**
