@@ -19,7 +19,7 @@ A model for Author, Publisher and Books was created to help establish relationsh
 - Run `php artisan db:seed` to seed data into the database
 - Run using `php artisan serve` which starts the application using laravel default port 8000 to run it on the system locally.
 - Add `authorization` as header key and `my_app_test` as value ` 'authorization' => env('API_KEY')` or replace the value of `API_KEY` in .env file then use it as authorize the api
-
+- Run `php artisan test` to run unit test of the application
 ## Usage
 
 - Get all books `localhost:8000/api/public/book` method `GET` 
