@@ -5,11 +5,8 @@ namespace App\Exceptions;
 use ErrorException;
 use Throwable;
 use Illuminate\Database\QueryException;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
-use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -67,20 +64,6 @@ class Handler extends ExceptionHandler
             return $this->convertValidationExceptionToResponse($exception,$request);
         }
 
-        //Handle Authentication exception
-        if($exception instanceof AuthenticationException){
-            return $this->unauthenticated($request,$exception);
-        }
-
-        if($exception instanceof TokenInvalidException){
-            return response()->json(['error' =>'Token is invalid'],400);
-        }
-        if($exception instanceof TokenExpiredException){
-            return response()->json(['error' =>'Token expired'],404);
-        }
-        if($exception instanceof JWTException){
-            return response()->json(['error' =>'There is a problem with your token'],404);
-        }
         if($exception instanceof QueryException){
             return response()->json(['error' =>$exception->getMessage()],500);
         }
@@ -108,10 +91,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => "No {$modelName} exist with this Identifier"],404);
         }
         return parent::render($request, $exception);
-    }
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        return response()->json(['error' => 'unauthenticated '.$exception->getLine()],401);
     }
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request)
